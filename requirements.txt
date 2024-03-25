@@ -5,3 +5,5 @@ pandas
 altair
 xlsxwriter
 openpyxl
+plotly
+plotly.express
