@@ -3,6 +3,7 @@ from brukeropusreader import read_file
 import streamlit as st
 import pandas as pd
 import numpy as np
+import plotly
 import plotly.express as px
 from io import BytesIO, StringIO
 import statistics
