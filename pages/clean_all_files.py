@@ -5,7 +5,7 @@ from io import BytesIO
 import os
 st.set_page_config(page_title="File Upload and Processing", page_icon="📈")
 # Title and file upload
-st.title('File Upload and Processing')
+st.markdown('# File Upload and Processing')
 input_files = st.file_uploader("Upload your files", accept_multiple_files=True)
 st.sidebar.header("File Upload and Processing")
 
