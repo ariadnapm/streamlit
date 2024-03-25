@@ -19,6 +19,6 @@ st.markdown(
     ### Do you need to work with OPUS files?
     - Convert them into easy to understand Excel files, using this [tool](https://github.com/ariadnapm/streamlit/blob/main/pages/2_📊_OPUS_converter.py)
     ### Do you have funny formats as files?
-    - Do you just want to convert text and other formatted files into ".xlsx" files? Click [here](https://github.com/ariadnapm/streamlit/blob/main/pages/clean_all_files.py)
+    - Do you just want to convert text and other formatted files into ".xlsx" files? Click [here](https://github.com/ariadnapm/streamlit/blob/main/pages/1_📈_Clean_All_Files.py)
 """
 )
