@@ -1,9 +1,9 @@
+
 from tempfile import NamedTemporaryFile
 from brukeropusreader import read_file
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly
 import plotly.express as px
 from io import BytesIO, StringIO
 import statistics
@@ -45,7 +45,7 @@ def Average(lst):
 
 with col2:
     if uploaded_files:
-        combined_df = pd.DataFrame(columns=["Time", "Signal", "Sample Name", "LV_SampleInfo", "Sample Set Id", "LV_Batch", "Sample Set Name", "Sample Set Start Date", "Injection Volume", "System Name", "LV_BatchID", "Sample Type"])
+        combined_df = pd.DataFrame()
         max_signals_points = []
         max_signals_time = []
 
@@ -56,7 +56,7 @@ with col2:
             
             
             #collect info data from the file
-            df_info = df.loc[0]        
+            df_info = df.loc[0]      
             SampleName =  df_info.iloc[0]
             LV_SampleInfo =  df_info.iloc[1]
             SampleSetId =  df_info.iloc[2]
@@ -71,7 +71,7 @@ with col2:
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
-            data = data.rename(columns={'SampleName': 'Time', 'LV_SampleInfo': 'Signal'})
+            data = data.rename(columns={df.columns[0]: 'Time', df.columns[1]: 'Signal'})
                 
             tid_array = data["Time"]
             signal_array = data["Signal"]
@@ -87,7 +87,7 @@ with col2:
             max_default = 40.0
 
 
-            file_df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, "Sample Name": SampleName, "LV_SampleInfo": LV_SampleInfo, "Sample Set Id": SampleSetId, "LV_Batch": LV_Batch, "Sample Set Name": SampleSetName, "Sample Set Start Date": SampleSetStartDate, "Injection Volume": InjectionVolume, "System Name": SystemName, "LV_BatchID": LV_BatchID, "Sample Type": SampleType})
+            file_df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             #find maximum signal point
@@ -104,7 +104,7 @@ with col2:
         with col1:
             minimum = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
             maximum = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
-            option = st.selectbox('Legend view', ("Sample Name",	"LV_SampleInfo",	"Sample Set Id",	"LV_Batch",	"Sample Set Name",	"Sample Set Start Date",	"Injection Volume",	"System Name",	"LV_BatchID",	"Sample Type"))
+            option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9]))
 
         #Create a line plot with legend: RAW DATA
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
@@ -134,7 +134,7 @@ with col2:
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
-            data = data.rename(columns={'SampleName': 'Time', 'LV_SampleInfo': 'Signal'})
+            data = data.rename(columns={df.columns[0]: 'Time', df.columns[1]: 'Signal'})
                 
             tid_array = data["Time"]
             signal_array = data["Signal"]
@@ -157,7 +157,7 @@ with col2:
                 x_signal_array = signal_array
 
 
-            x_shifted_df = pd.DataFrame({"Time": tid_array, "Signal": x_signal_array, "Sample Name": SampleName, "LV_SampleInfo": LV_SampleInfo, "Sample Set Id": SampleSetId, "LV_Batch": LV_Batch, "Sample Set Name": SampleSetName, "Sample Set Start Date": SampleSetStartDate, "Injection Volume": InjectionVolume, "System Name": SystemName, "LV_BatchID": LV_BatchID, "Sample Type": SampleType})
+            x_shifted_df = pd.DataFrame({"Time": tid_array, "Signal": x_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
 
             combined_x_shifted_df  = pd.concat([combined_x_shifted_df , x_shifted_df],  ignore_index=True)
         
@@ -184,7 +184,7 @@ with col2:
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
-            data = data.rename(columns={'SampleName': 'Time', 'LV_SampleInfo': 'Signal'})
+            data = data.rename(columns={df.columns[0]: 'Time', df.columns[1]: 'Signal'})
                 
             tid_array = data["Time"]
             signal_array = data["Signal"]
@@ -225,7 +225,7 @@ with col2:
                 xy_signal_array = signal_array
 
 
-            xy_shifted_df = pd.DataFrame({"Time": xy_signal_time_array, "Signal": xy_signal_array, "Sample Name": SampleName, "LV_SampleInfo": LV_SampleInfo, "Sample Set Id": SampleSetId, "LV_Batch": LV_Batch, "Sample Set Name": SampleSetName, "Sample Set Start Date": SampleSetStartDate, "Injection Volume": InjectionVolume, "System Name": SystemName, "LV_BatchID": LV_BatchID, "Sample Type": SampleType})
+            xy_shifted_df = pd.DataFrame({"Time": xy_signal_time_array, "Signal": xy_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
             combined_xy_shifted_df  = pd.concat([combined_xy_shifted_df , xy_shifted_df],  ignore_index=True)
 
         #Create a line plot with legend: XY-SHIFTED
