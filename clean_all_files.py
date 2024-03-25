@@ -9,18 +9,6 @@ st.title('File Upload and Processing')
 input_files = st.file_uploader("Upload your files", accept_multiple_files=True)
 
 
-#SECRETS
-########################SECRETS
-st.write("DB username:", st.secrets["db_username"])
-st.write("DB password:", st.secrets["db_password"])
-
-
-st.write(
-    "Has environment variables been set:",
-    os.environ["db_username"] == st.secrets["db_username"],
-)
-
-
 # Processing the uploaded files
 if input_files:
     for file in input_files:
