@@ -9,7 +9,7 @@ from tempfile import NamedTemporaryFile
 from io import BytesIO
 
 #################HTML
-st.set_page_config(layout="wide")
+st.set_page_config(layout="wide, page_title="OPUS File Extractor", page_icon="📊")
 st.title('OPUS File Extractor')
 
 st.sidebar.header("OPUS File Extractor")
