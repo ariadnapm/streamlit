@@ -13,7 +13,7 @@ import os
 st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍")
 
 ##############################################html settings
-st.markdown('# Chromatogram Graph Tool', anchor=False)
+st.markdown('# Chromatogram Graph Tool')
 st.sidebar.header("Chromatogram Graph Tool")
 
 st.markdown(
