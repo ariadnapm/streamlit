@@ -1,0 +1,7 @@
+streamlit
+datetime
+brukeropusreader
+pandas
+altair
+xlsxwriter
+openpyxl
