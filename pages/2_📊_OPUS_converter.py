@@ -26,27 +26,27 @@ def process_opus_files(filelist):
         temp_files_collection.append(temp_file.name)
 
         # Extract metadata from OPUS file
-        optik = opus_data["Optik"]
-        AB_data = opus_data["AB Data Parameter"]
-        instrument_RF = opus_data["Instrument (Rf)"]
-        sample = opus_data["Sample"]
-        instrument = opus_data["Instrument"]
+        optik = opus_data.get("Optik", {})
+        AB_data = opus_data.get("AB Data Parameter", {})
+        instrument_RF = opus_data.get("Instrument (Rf)", {})
+        sample = opus_data.get("Sample", {})
+        instrument = opus_data.get("Instrument", {})
         
         # Create a dictionary with metadata
         metadata = {
             "Filename": file.name,
-            "Date": AB_data["DAT"],
-            "Time": AB_data["TIM"],
-            "Detector": optik["DTC"],
-            "User": sample["CNM"],
-            "Xpm-file": sample["EXP"],
-            "Sample compartment temperature": str(instrument_RF["TSM"]),
-            "Gain": instrument["ASG"],
-            "Ref Gain": instrument["ARG"],
-            "Humidity": instrument["HUM"],
-            "Firmware": instrument["VSN"],
-            "Instrument ID": instrument["SRN"],
-            "Instrument ready?": instrument["RDY"]
+            "Date": AB_data.get("DAT", "n/a"),
+            "Time": AB_data.get("TIM", "n/a"),
+            "Detector": optik.get("DTC", "n/a"),
+            "User": sample.get("CNM", "n/a"),
+            "Xpm-file": sample.get("EXP", "n/a"),
+            "Sample compartment temperature": str(instrument_RF.get("TSM", "n/a")),
+            "Gain": instrument.get("ASG", "n/a"),
+            "Ref Gain": instrument.get("ARG", "n/a"),
+            "Humidity": instrument.get("HUM", "n/a"),
+            "Firmware": instrument.get("VSN", "n/a"),
+            "Instrument ID": instrument.get("SRN", "n/a"),
+            "Instrument ready?": instrument.get("RDY", "n/a")
         }
         
         metadata_list.append(metadata)
