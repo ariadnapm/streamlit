@@ -9,7 +9,7 @@ import statistics
 import os
 
 
-st.set_page_config(layout="wide", page_title="Chromatogram Graph Tool", page_icon="🌍")
+st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍")
 
 ##############################################html settings
 st.markdown('# Chromatogram Graph Tool', anchor=False)
