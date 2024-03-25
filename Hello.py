@@ -15,7 +15,7 @@ st.markdown(
     **👈 Select a tool from the sidebar:
     of what Streamlit can do!
     ### Are you working with chromatograms?
-    - DO you want to view plots? Go [here](https://github.com/ariadnapm/streamlit/blob/main/chromatogram_plotter.py)
+    - Do you want to view plots? Go [here](https://github.com/ariadnapm/streamlit/blob/main/chromatogram_plotter.py)
     ### Do you need to work with OPUS files?
     - Convert them into easy to understand Excel files, using this [tool](https://github.com/ariadnapm/streamlit/blob/main/OPUS_converter.py)
     ### Do you have funny formats as files?
