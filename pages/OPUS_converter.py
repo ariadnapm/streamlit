@@ -12,6 +12,7 @@ from io import BytesIO
 st.set_page_config(layout="wide")
 st.title('OPUS File Extractor')
 
+st.sidebar.header("OPUS File Extractor")
 
 temp_files_collection = []
 
