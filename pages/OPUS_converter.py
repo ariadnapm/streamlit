@@ -10,7 +10,7 @@ from io import BytesIO
 
 #################HTML
 st.set_page_config(layout="wide, page_title="OPUS File Extractor", page_icon="📊")
-st.title('OPUS File Extractor')
+st.markdown('# OPUS File Extractor')
 
 st.sidebar.header("OPUS File Extractor")
 
