@@ -3,11 +3,14 @@ import pandas as pd
 from openpyxl.comments import Comment
 from io import BytesIO
 import os
+
 st.set_page_config(page_title="File Upload and Processing", page_icon="📈")
+st.sidebar.header("File Upload and Processing")
+
+
 # Title and file upload
 st.markdown('# File Upload and Processing')
 input_files = st.file_uploader("Upload your files", accept_multiple_files=True)
-st.sidebar.header("File Upload and Processing")
 
 
 # Processing the uploaded files
