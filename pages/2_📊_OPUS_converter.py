@@ -167,7 +167,7 @@ with col2:
             max_default = max_x
             
         with col1:
-            st.markdown("X-axis of data plot:")
+            st.markdown("X-axis of background plot:")
             minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
             maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
                 
