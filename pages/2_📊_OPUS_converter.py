@@ -121,9 +121,9 @@ with col2:
             max_default = max_x
             
         with col1:
-            st.markdown("X-axis of data plot:")
-            minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
-            maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
+            with st.expander("X-axis of data plot:"):
+                minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
+                maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
                 
             with st.expander("Y-axis of data plot:"):
                 minimumy = st.slider("Minimum value ", 0.0, 4.0, 0.0)
@@ -168,9 +168,9 @@ with col2:
             maxb_default = max_xb
             
         with col1:
-            st.markdown("X-axis of background plot:")
-            minimumxb = st.slider("Minimum value", min_xb, max_xb, minb_default)
-            maximumxb = st.slider("Maximum value", min_xb, max_xb, maxb_default)
+            with st.expander("X-axis of background plot:"):
+                minimumxb = st.slider("Minimum value", min_xb, max_xb, minb_default)
+                maximumxb = st.slider("Maximum value", min_xb, max_xb, maxb_default)
                 
             with st.expander("Y-axis of background plot:"):
                 minimumyb = st.slider("Minimum value", 0.0, 4.0, 0.0)
