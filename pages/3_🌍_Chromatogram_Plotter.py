@@ -1,5 +1,3 @@
-
-
 from tempfile import NamedTemporaryFile
 from brukeropusreader import read_file
 import streamlit as st
