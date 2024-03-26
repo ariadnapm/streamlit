@@ -109,6 +109,8 @@ with col2:
         #Create a line plot with legend: RAW DATA
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
         fig.update_xaxes(range=list([minimum, maximum]))
+        fig.update_yaxes(range=list([-0.1, 0.1]))
+
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
@@ -166,6 +168,8 @@ with col2:
         fig_x_shifted  = px.line(combined_x_shifted_df , x="Time", y="Signal", color = option, title='Chomatogram y-shifted')
         fig_x_shifted.update_layout(showlegend=True)
         fig_x_shifted.update_xaxes(range=list([minimum, maximum]))
+        fig_x_shifted.update_yaxes(range=list([-0.1, 0.1]))
+
         st.plotly_chart(fig_x_shifted , theme="streamlit", use_container_width=True)
     
 
@@ -232,5 +236,7 @@ with col2:
         fig_xy_shifted  = px.line(combined_xy_shifted_df , x="Time", y="Signal", color = option, title='Chomatogram xy-shifted')
         fig_xy_shifted.update_layout(showlegend=True)
         fig_xy_shifted.update_xaxes(range=list([minimum, maximum]))
+        fig_xy_shifted.update_yaxes(range=list([-0.1, 0.1]))
+
         st.plotly_chart(fig_xy_shifted , theme="streamlit", use_container_width=True)
         
