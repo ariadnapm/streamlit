@@ -315,7 +315,7 @@ with col1:
                     data=bytes_data,
                     file_name=output_file_name,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                    key=f"{processed_file}_{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
+                    key=f"{processed_file}"
                 )
 
 
