@@ -115,7 +115,7 @@ with col2:
             min_x = np.min(ab_x)
             max_x = np.max(ab_x)
             min_default = min_x
-            min_default = min_default
+            max_default = max_x
             
             with col1:
                 minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
