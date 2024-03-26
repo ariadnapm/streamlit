@@ -5,6 +5,7 @@ import pandas as pd
 import altair as alt
 import numpy as np
 import os
+import plotly.express as px
 import xlsxwriter
 from tempfile import NamedTemporaryFile
 from io import BytesIO
