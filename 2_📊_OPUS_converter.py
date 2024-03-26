@@ -169,12 +169,12 @@ with col2:
             
         with col1:
             st.markdown("X-axis of background plot:")
-            minimumxb = st.slider("Minimum value ", min_xb, max_xb, minb_default)
-            maximumxb = st.slider("Maximum value ", min_xb, max_xb, maxb_default)
+            minimumxb = st.slider("Minimum value", min_xb, max_xb, minb_default)
+            maximumxb = st.slider("Maximum value", min_xb, max_xb, maxb_default)
                 
             with st.expander("Y-axis of background plot:"):
-                minimumyb = st.slider("Minimum value ", 0.0, 4.0, 0.0)
-                maximumyb = st.slider("Minimum value ", 0.0, 4.0, 4.0)
+                minimumyb = st.slider("Minimum value", 0.0, 4.0, 0.0)
+                maximumyb = st.slider("Minimum value", 0.0, 4.0, 4.0)
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
