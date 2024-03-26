@@ -108,18 +108,29 @@ with col2:
             file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x, "Absorbance (AU)": signal, "File": file.name})
             combined_df = pd.concat([combined_df, file_df])
 
-        # Create a line plot for the combined data with legend
-        line_plot = alt.Chart(combined_df).mark_line().encode(
-            x=alt.X('Wavenumber (cm^-1):Q', title='Wavenumber (cm^-1)', scale=alt.Scale(reverse=True)),
-            y=alt.Y('Absorbance (AU):Q', title='Absorbance (AU)'),
-            color='File:N'
-        ).properties(
-            width=600,
-            height=400
-        )
-        # Display the line plot
-        st.subheader("Combined Data Line Plot")
-        st.altair_chart(line_plot, use_container_width=True)
+            min_x = np.min(ab_x)
+            max_x = np.max(ab_x)
+            min_default = min_x
+            min_default = min_default
+            
+            with col1:
+                minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
+                maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
+                
+                with st.expander("Y-axis:"):
+                    minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0)
+                    maximumy = st.slider("Select maximum value for the y-axis of the plot", 0.0, 4.0, 4.0)
+
+        
+                #Create a line plot with legend: RAW DATA
+        fig = px.line(combined_df, x="Wavenumber (cm^-1)", y="Absorbance (AU)", color = "File", title="Combined Data Line Plot")
+        fig.update_xaxes(range=list([minimumx, maximumx]))
+        fig.update_yaxes(range=list([minimumy, maximumy]))
+
+        fig.update_layout(showlegend=True)
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+
 
 
 
@@ -139,21 +150,12 @@ with col2:
             background_signal = opus_data["ScRf"][0:len(ab_x)]
             background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_x, "Background Spectra": background_signal, "File": file.name})])
 
+        fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
+        fig.update_xaxes(range=list([minimumx, maximumx]))
+        fig.update_yaxes(range=list([minimumy, maximumy]))
 
-        # Create a line plot for the background spectra
-        background_line_plot = alt.Chart(background_df).mark_line().encode(
-            x=alt.X('Wavenumber (cm^-1):Q', title='Wavenumber (cm^-1)', scale=alt.Scale(reverse=True)),
-            y=alt.Y('Background Spectra:Q', title='Background Spectra'),
-            color='File:N'
-        ).properties(
-            width=600,
-            height=400
-        )
-        # Display the background signal graph
-        st.subheader("Background Signal Graph")
-        st.altair_chart(background_line_plot, use_container_width=True)
-
-
+        fig.update_layout(showlegend=True)
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
 
