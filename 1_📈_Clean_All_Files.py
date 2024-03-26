@@ -4,7 +4,7 @@ from openpyxl.comments import Comment
 from io import BytesIO
 import os
 
-st.set_page_config(page_title="File Upload and Processing", page_icon="📈")
+st.set_page_config(page_title="File Upload and Processing", page_icon="📈", layout="wide")
 st.sidebar.header("File Upload and Processing")
 
 
