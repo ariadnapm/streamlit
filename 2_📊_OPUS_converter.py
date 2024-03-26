@@ -108,6 +108,10 @@ with col2:
             file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x, "Absorbance (AU)": signal, "File": file.name})
             combined_df = pd.concat([combined_df, file_df])
 
+
+            ab_x = pd.to_numeric(ab_x, errors='coerce')
+            signal = pd.to_numeric(signal, errors='coerce')
+            
             min_x = np.min(ab_x)
             max_x = np.max(ab_x)
             min_default = min_x
