@@ -30,6 +30,7 @@ container = st.container()
 
 col1, col2 = container.columns([1,2])
 
+temp_files_collection = []
 
 ################# Section 1: File Upload
 
