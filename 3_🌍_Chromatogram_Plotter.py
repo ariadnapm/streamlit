@@ -102,14 +102,16 @@ with col2:
             max_signals_time.append(max_signal_time)
         
         with col1:
-            minimum = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
-            maximum = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
+            minimum-x = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
+            maximum-x = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
             option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9]))
+            minimum-y = st.slider("Select minimum value for the y-axis of the plot", -1, 1, -0.1)
+            maximum-y = st.slider("Select maximum value for the y-axis of the plot", -1, 1, 0.1)
 
         #Create a line plot with legend: RAW DATA
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
-        fig.update_xaxes(range=list([minimum, maximum]))
-        fig.update_yaxes(range=list([-0.1, 0.1]))
+        fig.update_xaxes(range=list([minimum-x, maximum-x]))
+        fig.update_yaxes(range=list([minimum-y, maximum-y]))
 
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
@@ -168,7 +170,7 @@ with col2:
         fig_x_shifted  = px.line(combined_x_shifted_df , x="Time", y="Signal", color = option, title='Chomatogram y-shifted')
         fig_x_shifted.update_layout(showlegend=True)
         fig_x_shifted.update_xaxes(range=list([minimum, maximum]))
-        fig_x_shifted.update_yaxes(range=list([-0.1, 0.1]))
+        fig_x_shifted.update_yaxes(range=list([minimum-y, maximum-y]))
 
         st.plotly_chart(fig_x_shifted , theme="streamlit", use_container_width=True)
     
@@ -236,7 +238,7 @@ with col2:
         fig_xy_shifted  = px.line(combined_xy_shifted_df , x="Time", y="Signal", color = option, title='Chomatogram xy-shifted')
         fig_xy_shifted.update_layout(showlegend=True)
         fig_xy_shifted.update_xaxes(range=list([minimum, maximum]))
-        fig_xy_shifted.update_yaxes(range=list([-0.1, 0.1]))
+        fig_xy_shifted.update_yaxes(range=list([minimum-y, maximum-y]))
 
         st.plotly_chart(fig_xy_shifted , theme="streamlit", use_container_width=True)
         
