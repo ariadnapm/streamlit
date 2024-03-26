@@ -132,7 +132,7 @@ with col2:
         
                 #Create a line plot with legend: RAW DATA
         fig = px.line(combined_df, x="Wavenumber (cm^-1)", y="Absorbance (AU)", color = "File", title="Combined Data Line Plot")
-        fig.update_xaxes(range=list([minimumx, maximumx]))
+        fig.update_xaxes(range=list([maximumx, minimumx]))
         fig.update_yaxes(range=list([minimumy, maximumy]))
 
         fig.update_layout(showlegend=True)
@@ -159,7 +159,7 @@ with col2:
 
             ab_xb = pd.to_numeric(ab_x, errors='coerce')
             background_signal = pd.to_numeric(background_signal, errors='coerce')
-            file_bdf = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
+            file_bdf = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Background Spectra": background_signal[::-1], "File": file.name})
 
             background_df = pd.concat([background_df, file_bdf], ignore_index=True)
 
@@ -180,7 +180,7 @@ with col2:
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
-        fig.update_xaxes(range=list([minimumxb, maximumxb]))
+        fig.update_xaxes(range=list([maximumxb, minimumxb]))
         fig.update_yaxes(range=list([minimumyb, maximumyb]))
 
         fig.update_layout(showlegend=True)
