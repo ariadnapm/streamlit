@@ -262,8 +262,9 @@ with col1:
             chroma_data = read_file(temp_file.name)
             temp_files_collection.append(temp_file.name)
             
-            
-            df = pd.read_table(file)
+            file_contents = file.getvalue().decode()
+            df = pd.read_csv(StringIO(file_contents), delimiter='\t')
+
 
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
@@ -325,7 +326,9 @@ with col1:
             opus_data = read_file(temp_file.name)
             temp_files_collection.append(temp_file.name)
 
-            df = pd.read_table(file)
+            file_contents = file.getvalue().decode()
+            df = pd.read_csv(StringIO(file_contents), delimiter='\t')
+
 
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
