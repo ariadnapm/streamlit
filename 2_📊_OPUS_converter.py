@@ -113,7 +113,7 @@ with col2:
             ab_x = pd.to_numeric(ab_x, errors='coerce')
             signal = pd.to_numeric(signal, errors='coerce')
             file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
-            combined_df = pd.concat([combined_df, file_df])
+            combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             min_x = np.min(ab_x)
             max_x = np.max(ab_x)
@@ -159,7 +159,9 @@ with col2:
 
             ab_xb = pd.to_numeric(ab_x, errors='coerce')
             background_signal = pd.to_numeric(background_signal, errors='coerce')
-            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_xb[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
+            file_bdf = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
+
+            background_df = pd.concat([background_df, file_bdf], ignore_index=True)
 
             
             min_xb = np.min(ab_xb)
