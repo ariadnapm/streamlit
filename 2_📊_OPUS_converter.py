@@ -125,9 +125,14 @@ with col2:
             max_x = np.max(ab_x)
             data_max_signal.append(max_x)
 
-
+            
             min_y = np.min(signal)
-            data_min_ab.append(min_y)
+            if min_y < 0.0:
+                min_y = 0.0
+                data_min_ab.append(min_y)
+            else:
+                data_min_ab.append(min_y)
+
             max_y = np.max(signal)
             data_max_ab.append(max_y)
 
