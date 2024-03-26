@@ -1,4 +1,5 @@
 
+
 import streamlit as st
 from datetime import datetime
 from brukeropusreader import read_file
@@ -152,33 +153,33 @@ with col2:
             opus_data = read_file(temp_file.name)
             temp_files_collection.append(temp_file.name)
 
-            ab_x = opus_data.get_range("AB")
+            ab_xb = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
             background_signal = opus_data["ScRf"][0:len(ab_x)]
-            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
+            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_xb[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
 
 
-            ab_x = pd.to_numeric(ab_x, errors='coerce')
+            ab_xb = pd.to_numeric(ab_x, errors='coerce')
             background_signal = pd.to_numeric(background_signal, errors='coerce')
             
-            min_x = np.min(ab_x)
-            max_x = np.max(ab_x)
-            min_default = min_x
-            max_default = max_x
+            min_xb = np.min(ab_xb)
+            max_xb = np.max(ab_x)
+            minb_default = min_xb
+            maxb_default = max_xb
             
         with col1:
-            st.markdown("X-axis of data plot:")
-            minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
-            maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
+            st.markdown("X-axis of background plot:")
+            minimumxb = st.slider("Minimum value ", min_xb, max_xb, minb_default)
+            maximumxb = st.slider("Maximum value ", min_xb, max_xb, maxb_default)
                 
             with st.expander("Y-axis of background plot:"):
-                minimumy = st.slider("Minimum value ", 0.0, 4.0, 0.0)
-                maximumy = st.slider("Minimum value ", 0.0, 4.0, 4.0)
+                minimumyb = st.slider("Minimum value ", 0.0, 4.0, 0.0)
+                maximumyb = st.slider("Minimum value ", 0.0, 4.0, 4.0)
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
-        fig.update_xaxes(range=list([minimumx, maximumx]))
-        fig.update_yaxes(range=list([minimumy, maximumy]))
+        fig.update_xaxes(range=list([minimumxb, maximumxb]))
+        fig.update_yaxes(range=list([minimumyb, maximumyb]))
 
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
