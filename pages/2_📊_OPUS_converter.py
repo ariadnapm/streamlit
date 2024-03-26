@@ -94,7 +94,13 @@ with col2:
         metadata_list = process_opus_files(uploaded_files)
 
         #st.subheader("Data Visualizations")
+        background_min_signl = []
+        background_max_signal = []
 
+        background_min_ab = []
+        background_max_ab = []
+
+        
         combined_df = pd.DataFrame(columns=["Wavenumber (cm^-1)", "Absorbance (AU)", "File"])
 
         for file in uploaded_files:
@@ -114,18 +120,34 @@ with col2:
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             min_x = np.min(ab_x)
+            background_min_signal.append(min_x)
             max_x = np.max(ab_x)
-            min_default = min_x
-            max_default = max_x
+            background_max_signal.append(max_x)
+
+
+            min_y = np.min(signal)
+            background_min_ab.append(min_y)
+            max_y = np.max(signal)
+            background_min_ab.append(max_y)
+
+        all_min_x = np.min(background_min_ab)
+        all_max_x = np.min(background_max_ab)
+        all_min_y = np.min(background_min_signal)
+        all_max_y = np.min(background_max_signal)
+
+        minx_default = all_min_x
+        maxx_default = all_max_x
+        miny_default = all_min_y
+        maxy_default = all_max_y
             
         with col1:
             with st.expander("X-axis of data plot:"):
-                minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
-                maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
+                minimumx = st.slider("Minimum value ", all_min_x, all_max_x, minx_default)
+                maximumx = st.slider("Maximum value ", all_min_x, all_max_x, maxx_default)
                 
             with st.expander("Y-axis of data plot:"):
-                minimumy = st.slider("Minimum value ", 0.0, 4.0, 0.0)
-                maximumy = st.slider("Maximum value ", 0.0, 4.0, 4.0)
+                minimumy = st.slider("Minimum value ", all_min_y, all_max_y, miny_default)
+                maximumy = st.slider("Maximum value ", all_min_y, all_max_y, maxy_default)
 
         
                 #Create a line plot with legend: RAW DATA
