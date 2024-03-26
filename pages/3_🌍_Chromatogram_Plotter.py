@@ -52,7 +52,8 @@ with col2:
 
             #read file and forget first two lines - (info_lines)
             df = pd.read_table(file)
-            
+
+            filename = file.name
             
             #collect info data from the file
             df_info = df.loc[0]      
@@ -66,7 +67,8 @@ with col2:
             SystemName =  df_info.iloc[7]
             LV_BatchID =  df_info.iloc[8]
             SampleType =  df_info.iloc[9]
-                    
+
+            
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
@@ -86,7 +88,7 @@ with col2:
             max_default = 40.0
 
 
-            file_df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
+            file_df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             #find maximum signal point
@@ -129,7 +131,7 @@ with col2:
 
         for file, max_signal, signal_array in zip(uploaded_files, max_signals_points, max_signals_time):
             file_contents = file.getvalue().decode()
-    
+            filename = file.name
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
             #collect info data from the file
             df_info = df.loc[0]        
@@ -161,7 +163,7 @@ with col2:
                 x_signal_array = signal_array
 
 
-            x_shifted_df = pd.DataFrame({"Time": tid_array, "Signal": x_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
+            x_shifted_df = pd.DataFrame({"Time": tid_array, "Signal": x_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
 
             combined_x_shifted_df  = pd.concat([combined_x_shifted_df , x_shifted_df],  ignore_index=True)
         
@@ -185,7 +187,7 @@ with col2:
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
             #collect info data from the file
             df_info = df.loc[0]        
-
+            filename = file.name
             
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
@@ -231,7 +233,7 @@ with col2:
                 xy_signal_array = signal_array
 
 
-            xy_shifted_df = pd.DataFrame({"Time": xy_signal_time_array, "Signal": xy_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType})
+            xy_shifted_df = pd.DataFrame({"Time": xy_signal_time_array, "Signal": xy_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
             combined_xy_shifted_df  = pd.concat([combined_xy_shifted_df , xy_shifted_df],  ignore_index=True)
 
         #Create a line plot with legend: XY-SHIFTED
