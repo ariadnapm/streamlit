@@ -94,11 +94,11 @@ with col2:
         metadata_list = process_opus_files(uploaded_files)
 
         #st.subheader("Data Visualizations")
-        background_min_signl = []
-        background_max_signal = []
+        data_min_signal = []
+        data_max_signal = []
 
-        background_min_ab = []
-        background_max_ab = []
+        data_min_ab = []
+        data_max_ab = []
 
         
         combined_df = pd.DataFrame(columns=["Wavenumber (cm^-1)", "Absorbance (AU)", "File"])
@@ -120,20 +120,20 @@ with col2:
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             min_x = np.min(ab_x)
-            background_min_signal.append(min_x)
+            data_min_signal.append(min_x)
             max_x = np.max(ab_x)
-            background_max_signal.append(max_x)
+            data_max_signal.append(max_x)
 
 
             min_y = np.min(signal)
-            background_min_ab.append(min_y)
+            data_min_ab.append(min_y)
             max_y = np.max(signal)
-            background_min_ab.append(max_y)
+            data_min_ab.append(max_y)
 
-        all_min_x = np.min(background_min_ab)
-        all_max_x = np.min(background_max_ab)
-        all_min_y = np.min(background_min_signal)
-        all_max_y = np.min(background_max_signal)
+        all_min_x = np.min(data_min_ab)
+        all_max_x = np.min(data_max_ab)
+        all_min_y = np.min(data_min_signal)
+        all_max_y = np.min(data_max_signal)
 
         minx_default = all_min_x
         maxx_default = all_max_x
@@ -161,8 +161,12 @@ with col2:
 
 
 
+        
+        background_min_signal = []
+        background_max_signal = []
 
-
+        background_min_ab = []
+        background_max_ab = []
 
         background_df = pd.DataFrame(columns=["Wavenumber (cm^-1)", "Background Spectra", "File"])
 
@@ -183,21 +187,36 @@ with col2:
 
             background_df = pd.concat([background_df, file_bdf], ignore_index=True)
 
-            
-            min_xb = np.min(ab_xb)
-            max_xb = np.max(ab_x)
-            minb_default = min_xb
-            maxb_default = max_xb
+            min_x = np.min(ab_xb)
+            background_min_signal.append(min_x)
+            max_x = np.max(ab_xb)
+            background_max_signal.append(max_x)
+
+
+            min_y = np.min(signal)
+            background_min_ab.append(min_y)
+            max_y = np.max(signal)
+            background_min_ab.append(max_y)
+
+        all_min_x = np.min(background_min_ab)
+        all_max_x = np.min(background_max_ab)
+        all_min_y = np.min(background_min_signal)
+        all_max_y = np.min(background_max_signal)
+
+        minx_default = all_min_x
+        maxx_default = all_max_x
+        miny_default = all_min_y
+        maxy_default = all_max_y
             
             
         with col1:
             with st.expander("X-axis of background plot:"):
-                minimumxb = st.slider("Minimum value", min_xb, max_xb, minb_default)
-                maximumxb = st.slider("Maximum value", min_xb, max_xb, maxb_default)
+                minimumxb = st.slider("Minimum value", all_min_x, all_max_x, minx_default)
+                maximumxb = st.slider("Maximum value", all_min_x, all_max_x, minx_default)
                 
             with st.expander("Y-axis of background plot:"):
-                minimumyb = st.slider("Minimum value", 0.0, 4.0, 0.0)
-                maximumyb = st.slider("Minimum value", 0.0, 4.0, 1.0)
+                minimumyb = st.slider("Minimum value", all_min_y, maxy_default, miny_default)
+                maximumyb = st.slider("Minimum value", all_min_y, maxy_default, maxy_default)
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
