@@ -105,8 +105,8 @@ with col2:
             minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
             maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
             option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9]))
-            minimumy = st.slider("Select minimum value for the y-axis of the plot", -1, 1, -0.1)
-            maximumy = st.slider("Select maximum value for the y-axis of the plot", -1, 1, 0.1)
+            minimumy = st.slider("Select minimum value for the y-axis of the plot", -1.0, 1.0, -0.1)
+            maximumy = st.slider("Select maximum value for the y-axis of the plot", -1.0, 1.0, 0.1)
 
         #Create a line plot with legend: RAW DATA
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
