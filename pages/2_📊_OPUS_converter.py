@@ -197,7 +197,7 @@ with col2:
 
 
             min_y = np.min(signal
-            if min_y < 0:
+            if min_y < 0.0:
                 min_y = 0.0
                 background_min_signal.append(min_y)
             else:
