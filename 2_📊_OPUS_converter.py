@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 from datetime import datetime
 from brukeropusreader import read_file
