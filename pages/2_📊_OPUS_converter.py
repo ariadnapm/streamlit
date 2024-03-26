@@ -167,7 +167,8 @@ with col2:
             min_xb = np.min(ab_xb)
             max_xb = np.max(ab_x)
             minb_default = min_xb
-            maxb_default = 1
+            maxb_default = 1.0
+            
             
         with col1:
             with st.expander("X-axis of background plot:"):
