@@ -108,13 +108,13 @@ with col2:
 
             ab_x = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
-            file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
-            combined_df = pd.concat([combined_df, file_df])
 
 
             ab_x = pd.to_numeric(ab_x, errors='coerce')
             signal = pd.to_numeric(signal, errors='coerce')
-            
+            file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
+            combined_df = pd.concat([combined_df, file_df])
+
             min_x = np.min(ab_x)
             max_x = np.max(ab_x)
             min_default = min_x
@@ -155,12 +155,13 @@ with col2:
 
             ab_xb = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
-            background_signal = opus_data["ScRf"][0:len(ab_x)]
-            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_xb[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
-
 
             ab_xb = pd.to_numeric(ab_x, errors='coerce')
             background_signal = pd.to_numeric(background_signal, errors='coerce')
+
+            background_signal = opus_data["ScRf"][0:len(ab_x)]
+            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_xb[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
+
             
             min_xb = np.min(ab_xb)
             max_xb = np.max(ab_x)
