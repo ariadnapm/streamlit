@@ -196,8 +196,13 @@ with col2:
             background_max_ab.append(max_x)
 
 
-            min_y = np.min(signal)
-            background_min_signal.append(min_y)
+            min_y = np.min(signal
+            if min_y < 0:
+                min_y = 0.0
+                background_min_signal.append(min_y)
+            else:
+                background_min_signal.append(min_y)
+
             max_y = np.max(signal)
             background_max_signal.append(max_y)
 
@@ -215,7 +220,7 @@ with col2:
         with col1:
             with st.expander("X-axis of background plot:"):
                 minimumxb = st.slider("Minimum value", all_min_x, all_max_x, minx_default)
-                maximumxb = st.slider("Maximum value", all_min_x, all_max_x, minx_default)
+                maximumxb = st.slider("Maximum value", all_min_x, all_max_x, maxx_default)
                 
             with st.expander("Y-axis of background plot:"):
                 minimumyb = st.slider("Minimum value", all_min_y, maxy_default, miny_default)
