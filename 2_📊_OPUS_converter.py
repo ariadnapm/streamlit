@@ -129,7 +129,7 @@ with col2:
             min_y = np.min(signal)
             data_min_ab.append(min_y)
             max_y = np.max(signal)
-            data_min_ab.append(max_y)
+            data_max_ab.append(max_y)
 
         all_min_x = np.min(data_min_ab)
         all_max_x = np.min(data_max_ab)
