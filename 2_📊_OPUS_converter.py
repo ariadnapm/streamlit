@@ -4,6 +4,7 @@ from datetime import datetime
 from brukeropusreader import read_file
 import pandas as pd
 import altair as alt
+import numpy as np
 import os
 import xlsxwriter
 from tempfile import NamedTemporaryFile
