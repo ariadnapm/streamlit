@@ -1,3 +1,4 @@
+
 import streamlit as st
 from datetime import datetime
 from brukeropusreader import read_file
@@ -49,7 +50,6 @@ def process_opus_files(filelist):
             "Instrument ready?": instrument.get("RDY", "n/a")
         }
         
-        
         metadata_list.append(metadata)
     
     return metadata_list
@@ -78,7 +78,7 @@ st.markdown(
 # Full-width container
 container = st.container()
 # Create three vertical sections
-col1, col2, col3 = container.columns(3)
+col1, col2 = container.columns([1,2])
 # Section 1: File Upload
 with col1:
     # File upload
@@ -159,7 +159,7 @@ with col2:
 
 
 # Section 3: Processed files and download buttons
-with col3:
+with col1:
   
     if uploaded_files and metadata_list:
         excel_files = {}
