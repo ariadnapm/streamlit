@@ -117,13 +117,13 @@ with col2:
             min_default = min_x
             max_default = max_x
             
-            with col1:
-                minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
-                maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
+        with col1:
+            minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
+            maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
                 
-                with st.expander("Y-axis:"):
-                    minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0.0)
-                    maximumy = st.slider("Select maximum value for the y-axis of the plot", 0.0, 4.0, 4.0)
+            with st.expander("Y-axis:"):
+                minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0.0)
+                maximumy = st.slider("Select maximum value for the y-axis of the plot", 0.0, 4.0, 4.0)
 
         
                 #Create a line plot with legend: RAW DATA
