@@ -155,11 +155,10 @@ with col2:
 
             ab_xb = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
+            background_signal = opus_data["ScRf"][0:len(ab_x)]
 
             ab_xb = pd.to_numeric(ab_x, errors='coerce')
             background_signal = pd.to_numeric(background_signal, errors='coerce')
-
-            background_signal = opus_data["ScRf"][0:len(ab_x)]
             background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_xb[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
 
             
