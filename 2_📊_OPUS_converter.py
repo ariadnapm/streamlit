@@ -94,7 +94,7 @@ with col2:
     if uploaded_files:
         metadata_list = process_opus_files(uploaded_files)
 
-        st.subheader("Data Visualizations")
+        #st.subheader("Data Visualizations")
 
         combined_df = pd.DataFrame(columns=["Wavenumber (cm^-1)", "Absorbance (AU)", "File"])
 
@@ -107,7 +107,7 @@ with col2:
 
             ab_x = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
-            file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x, "Absorbance (AU)": signal, "File": file.name})
+            file_df = pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Absorbance (AU)": signal[::-1], "File": file.name})
             combined_df = pd.concat([combined_df, file_df])
 
 
@@ -120,12 +120,13 @@ with col2:
             max_default = max_x
             
         with col1:
-            minimumx = st.slider("Select minimum value for the x-axis of the plot", min_x, max_x, min_default)
-            maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
+            st.markdown("X-axis of data plot:")
+            minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
+            maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
                 
-            with st.expander("Y-axis:"):
-                minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0.0)
-                maximumy = st.slider("Select maximum value for the y-axis of the plot", 0.0, 4.0, 4.0)
+            with st.expander("Y-axis of data plot:"):
+                minimumy = st.slider("Minimum value ", 0.0, 4.0, 0.0)
+                maximumy = st.slider("Maximum value ", 0.0, 4.0, 4.0)
 
         
                 #Create a line plot with legend: RAW DATA
@@ -154,8 +155,27 @@ with col2:
             ab_x = opus_data.get_range("AB")
             signal = opus_data["AB"][0:len(ab_x)]
             background_signal = opus_data["ScRf"][0:len(ab_x)]
-            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_x, "Background Spectra": background_signal, "File": file.name})])
+            background_df = pd.concat([background_df, pd.DataFrame({"Wavenumber (cm^-1)": ab_x[::-1], "Background Spectra": background_signal[::-1], "File": file.name})])
 
+
+            ab_x = pd.to_numeric(ab_x, errors='coerce')
+            background_signal = pd.to_numeric(background_signal, errors='coerce')
+            
+            min_x = np.min(ab_x)
+            max_x = np.max(ab_x)
+            min_default = min_x
+            max_default = max_x
+            
+        with col1:
+            st.markdown("X-axis of data plot:")
+            minimumx = st.slider("Minimum value ", min_x, max_x, min_default)
+            maximumx = st.slider("Maximum value ", min_x, max_x, max_default)
+                
+            with st.expander("Y-axis of background plot:"):
+                minimumy = st.slider("Minimum value ", 0.0, 4.0, 0.0)
+                maximumy = st.slider("Minimum value ", 0.0, 4.0, 4.0)
+
+        
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
         fig.update_xaxes(range=list([minimumx, maximumx]))
         fig.update_yaxes(range=list([minimumy, maximumy]))
