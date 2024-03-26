@@ -11,7 +11,7 @@ import statistics
 import os
 
 
-st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍")
+st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍", layout="wide")
 
 ##############################################html settings
 st.markdown('# Chromatogram Graph Tool')
