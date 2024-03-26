@@ -122,7 +122,7 @@ with col2:
                 maximumx = st.slider("Select maximum value for the x-axis of the plot", min_x, max_x, max_default)
                 
                 with st.expander("Y-axis:"):
-                    minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0)
+                    minimumy = st.slider("Select minimum value for the y-axis of the plot", 0.0, 4.0, 0.0)
                     maximumy = st.slider("Select maximum value for the y-axis of the plot", 0.0, 4.0, 4.0)
 
         
