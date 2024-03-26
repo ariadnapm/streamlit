@@ -176,7 +176,7 @@ with col2:
                 
             with st.expander("Y-axis of background plot:"):
                 minimumyb = st.slider("Minimum value", 0.0, 4.0, 0.0)
-                maximumyb = st.slider("Minimum value", 0.0, 4.0, 4.0)
+                maximumyb = st.slider("Minimum value", 0.0, 4.0, 1.0)
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
