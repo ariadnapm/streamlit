@@ -122,16 +122,16 @@ with col2:
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             min_x = np.min(ab_x)
-            data_min_signal.append(min_x)
+            data_min_ab.append(min_x)
             max_x = np.max(ab_x)
-            data_max_signal.append(max_x)
+            data_max_ab.append(max_x)
 
             
             min_y = np.min(signal)
-            data_min_ab.append(min_y)
+            data_min_signal.append(min_y)
 
             max_y = np.max(signal)
-            data_max_ab.append(max_y)
+            data_max_signal.append(max_y)
 
         all_min_x = np.min(data_min_ab)
         all_max_x = np.min(data_max_ab)
@@ -191,15 +191,15 @@ with col2:
             background_df = pd.concat([background_df, file_bdf], ignore_index=True)
 
             min_x = np.min(ab_xb)
-            background_min_signal.append(min_x)
+            background_min_ab.append(min_x)
             max_x = np.max(ab_xb)
-            background_max_signal.append(max_x)
+            background_max_ab.append(max_x)
 
 
             min_y = np.min(signal)
-            background_min_ab.append(min_y)
+            background_min_signal.append(min_y)
             max_y = np.max(signal)
-            background_max_ab.append(max_y)
+            background_max_signal.append(max_y)
 
         all_min_x = np.min(background_min_ab)
         all_max_x = np.min(background_max_ab)
