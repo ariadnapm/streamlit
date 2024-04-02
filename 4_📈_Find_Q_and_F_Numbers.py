@@ -95,8 +95,6 @@ def extract_f_numbers_from_docx(file):
 def main():
     st.title("Q and F- Number Extractor")
     st.sidebar.title("Q and F- Number Extractor")
-    st.sidebar.write("Upload a PDF or DOCX file to extract Q and F- numbers.")
-
     uploaded_file = st.file_uploader("Upload PDF or DOCX", type=["pdf", "docx"])
 
     if uploaded_file is not None:
