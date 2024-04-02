@@ -5,7 +5,7 @@ st.set_page_config(
     page_icon="👋",
 )
 
-st.write("# Welcome to APEM MDev PAT MiniSite! 👋")
+st.write("# Welcome to MDev PAT MiniSite! 👋")
 
 st.sidebar.success("Select a tool you would like to try!")
 
