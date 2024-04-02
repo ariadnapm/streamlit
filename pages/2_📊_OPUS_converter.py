@@ -1,5 +1,6 @@
 
 
+
 import streamlit as st
 from datetime import datetime
 from brukeropusreader import read_file
@@ -128,11 +129,14 @@ with col2:
 
             
             min_y = np.min(signal)
-            if min_y < 0.0:
-                min_y = 0.0
-                data_min_signal.append(min_y)
-            else:
-                data_min_signal.append(min_y)
+            data_min_signal.append(min_y)
+            
+            
+            #if min_y < 0.0:
+            #    min_y = 0.0
+                #data_min_signal.append(min_y)
+            #else:
+            #    data_min_signal.append(min_y)
 
             max_y = np.max(signal)
             data_max_signal.append(max_y)
