@@ -122,20 +122,20 @@ with col2:
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
             min_x = np.min(ab_x)
-            data_min_ab.append(min_x)
+            data_min_ab.append(data_min_ab)
             max_x = np.max(ab_x)
-            data_max_ab.append(max_x)
+            data_max_ab.append(data_max_ab)
 
             
             min_y = np.min(signal)
             if min_y < 0.0:
                 min_y = 0.0
-                data_min_signal.append(min_y)
+                data_min_signal.append(data_min_signal)
             else:
-                data_min_signal.append(min_y)
+                data_min_signal.append(data_min_signal)
 
             max_y = np.max(signal)
-            data_max_signal.append(max_y)
+            data_max_signal.append(data_max_signal)
 
         all_min_x = np.min(data_min_ab)
         all_max_x = np.max(data_max_ab)
