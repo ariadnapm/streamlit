@@ -342,7 +342,7 @@ with col1:
 
             
             if not time_added:
-                time_added = tid_array = data["Time"]  # Replace with the actual wavelength data from the OPUS file
+                time_added = tid_array  # Replace with the actual wavelength data from the OPUS file
                 all_data_df["Signal"] = signal_array
                 time_added = True
 
@@ -350,7 +350,7 @@ with col1:
             df = pd.DataFrame({"Signal_" + file.name: signal_array})
 
             # Add the Absorbance data to the combined DataFrame
-            all_data_df = pd.concat([all_data_df, df], axis=1)
+            all_data_df = pd.concat(["Time": tid_array, df], axis=1)
 
             
 
