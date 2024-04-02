@@ -9,4 +9,4 @@ plotly
 plotly.express
 tempfile
 docx
-fitz
+pymupdf
