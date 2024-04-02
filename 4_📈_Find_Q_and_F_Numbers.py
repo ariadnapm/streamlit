@@ -6,7 +6,7 @@ import os
 import streamlit as st
 import fitz
 import tempfile
-import docx
+import python-docx
 
 st.set_page_config(page_title="Drop all Q- and F- numbers", page_icon="📈", layout="wide")
 st.sidebar.header("Drop all Q- and F- numbers")
