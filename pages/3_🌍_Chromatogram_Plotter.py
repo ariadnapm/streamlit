@@ -350,7 +350,7 @@ with col1:
             df = pd.DataFrame({"Signal_" + file.name: signal_array})
 
             # Add the Absorbance data to the combined DataFrame
-            all_data_df = pd.concat(["Time": tid_array, df], axis=1)
+            all_data_df = pd.concat([tid_array, df], axis=1)
 
             
 
