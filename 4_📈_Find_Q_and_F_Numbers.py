@@ -1,11 +1,7 @@
 import streamlit as st
 import fitz
 import tempfile
-import docx
 import os
-import streamlit as st
-import fitz
-import tempfile
 import python-docx
 
 st.set_page_config(page_title="Drop all Q- and F- numbers", page_icon="📈", layout="wide")
