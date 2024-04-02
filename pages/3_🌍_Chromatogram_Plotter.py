@@ -10,8 +10,6 @@ import statistics
 
 st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍", layout="wide")
 
-st.markdown('# Chromatogram Graph Tool')
-st.sidebar.header("Chromatogram Graph Tool")
 
 st.markdown(
     """
