@@ -1,5 +1,6 @@
 
 
+
 import streamlit as st
 from datetime import datetime
 from brukeropusreader import read_file
@@ -209,25 +210,25 @@ with col2:
             max_y = np.max(signal)
             background_max_signal.append(max_y)
 
-        all_min_x = np.min(background_min_ab)
-        all_max_x = np.min(background_max_ab)
-        all_min_y = np.min(background_min_signal)
-        all_max_y = np.min(background_max_signal)
+        all_min_xb = np.min(background_min_ab)
+        all_max_xb = np.min(background_max_ab)
+        all_min_yb = np.min(background_min_signal)
+        all_max_yb = np.min(background_max_signal)
 
-        minx_default = all_min_x
-        maxx_default = all_max_x
-        miny_default = all_min_y
-        maxy_default = all_max_y
+        minxb_default = all_min_xb
+        maxxb_default = all_max_xb
+        minyb_default = all_min_yb
+        maxyb_default = all_max_yb
             
             
         with col1:
             with st.expander("X-axis of background plot:"):
-                minimumxb = st.slider("Minimum value", all_min_x, all_max_x, minx_default)
-                maximumxb = st.slider("Maximum value", all_min_x, all_max_x, maxx_default)
+                minimumxb = st.slider("Minimum value", all_min_xb, all_max_xb, minxb_default)
+                maximumxb = st.slider("Maximum value", all_min_xb, all_max_xb, maxxb_default)
                 
             with st.expander("Y-axis of background plot:"):
-                minimumyb = st.slider("Minimum value", all_min_y, maxy_default, miny_default)
-                maximumyb = st.slider("Minimum value", all_min_y, maxy_default, maxy_default)
+                minimumyb = st.slider("Minimum value", all_min_yb, maxyb_default, minyb_default)
+                maximumyb = st.slider("Minimum value", all_min_yb, maxyb_default, maxyb_default)
 
         
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
