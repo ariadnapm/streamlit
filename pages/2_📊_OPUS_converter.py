@@ -138,9 +138,9 @@ with col2:
             data_max_signal.append(max_y)
 
         all_min_x = np.min(data_min_ab)
-        all_max_x = np.min(data_max_ab)
+        all_max_x = np.max(data_max_ab)
         all_min_y = np.min(data_min_signal)
-        all_max_y = np.min(data_max_signal)
+        all_max_y = np.max(data_max_signal)
 
         minx_default = all_min_x
         maxx_default = all_max_x
