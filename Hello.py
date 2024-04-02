@@ -12,8 +12,9 @@ st.write("# Welcome to MDev PAT MiniSite! 👋")
 st.markdown(
     """
     I (APEM) created this site that contains different tools that might be useful for the members of the PAT team.
-    #👈 Select a tool from the sidebar:
-    of what Streamlit can do!
+    
+    👈 Select a tool from the sidebar:
+
     ### Are you working with chromatograms?
     - Do you want to view plots? Go [here](https://hellopat.streamlit.app/Chromatogram_Plotter)
     ### Do you need to work with OPUS files?
