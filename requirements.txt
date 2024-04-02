@@ -7,3 +7,4 @@ xlsxwriter
 openpyxl
 plotly
 plotly.express
+fitz
