@@ -11,8 +11,6 @@ import os
 import xlsxwriter
 
 st.set_page_config(page_title="OPUS File Extractor", page_icon="📊", layout="wide")
-st.markdown('# OPUS File Extractor')
-st.sidebar.header("OPUS File Extractor")
 
 temp_files_collection = []
 
