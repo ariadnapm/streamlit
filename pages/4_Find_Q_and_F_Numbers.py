@@ -8,7 +8,9 @@ import fitz
 import tempfile
 import docx
 
-st.set_page_config(layout="wide", page_title="Drop all Q- and F- numbers")
+st.set_page_config(page_title="Drop all Q- and F- numbers", page_icon="📈", layout="wide")
+st.sidebar.header("Drop all Q- and F- numbers")
+
 st.markdown(
     """
     <style>
