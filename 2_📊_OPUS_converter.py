@@ -1,19 +1,14 @@
-
-
-
-import streamlit as st
-from datetime import datetime
-from brukeropusreader import read_file
-import pandas as pd
-import altair as alt
-import numpy as np
-import os
-import plotly.express as px
-import xlsxwriter
 from tempfile import NamedTemporaryFile
 from io import BytesIO
-
-#################HTML
+from datetime import datetime
+from brukeropusreader import read_file
+import altair as alt
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+import os
+import xlsxwriter
 
 st.set_page_config(page_title="OPUS File Extractor", page_icon="📊", layout="wide")
 st.markdown('# OPUS File Extractor')
@@ -65,9 +60,6 @@ def delete_files_with_names(directory, file_list):
             os.remove(file_path)
             print(f"Deleted: {filename}")
 
-
-#html settings
-
 st.markdown(
     """
     <style>
@@ -79,31 +71,24 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# Full-width container
 container = st.container()
-# Create three vertical sections
 col1, col2 = container.columns([1,2])
+
 # Section 1: File Upload
 with col1:
-    # File upload
     uploaded_files = st.file_uploader("Upload OPUS Files", accept_multiple_files=True)
-
-
-
 
 # Section 2: Plots
 with col2:
     if uploaded_files:
         metadata_list = process_opus_files(uploaded_files)
 
-        #st.subheader("Data Visualizations")
         data_min_signal = []
         data_max_signal = []
 
         data_min_ab = []
         data_max_ab = []
 
-        
         combined_df = pd.DataFrame(columns=["Wavenumber (cm^-1)", "Absorbance (AU)", "File"])
 
         for file in uploaded_files:
@@ -126,12 +111,11 @@ with col2:
             data_min_ab.append(min_x)
             max_x = np.max(ab_x)
             data_max_ab.append(max_x)
-
             
             min_y = np.min(signal)
             data_min_signal.append(min_y)
             
-            
+        
             #if min_y < 0.0:
             #    min_y = 0.0
                 #data_min_signal.append(min_y)
@@ -169,10 +153,7 @@ with col2:
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-
-
-
-        
+    
         background_min_signal = []
         background_max_signal = []
 
@@ -203,7 +184,6 @@ with col2:
             max_x = np.max(ab_xb)
             background_max_ab.append(max_x)
 
-
             min_y = np.min(background_signal)
             background_min_signal.append(min_y)
 
@@ -220,7 +200,6 @@ with col2:
         minyb_default = all_min_yb
         maxyb_default = all_max_yb
             
-            
         with col1:
             with st.expander("X-axis of background plot:"):
                 minimumxb = st.slider("Minimum value", all_min_xb, all_max_xb, minxb_default)
@@ -230,7 +209,6 @@ with col2:
                 minimumyb = st.slider("Minimum value", all_min_yb, maxyb_default, minyb_default)
                 maximumyb = st.slider("Minimum value", all_min_yb, maxyb_default, maxyb_default)
 
-        
         fig = px.line(background_df, x="Wavenumber (cm^-1)", y="Background Spectra", color = "File", title="Background Signal Graph")
         fig.update_xaxes(range=list([maximumxb, minimumxb]))
         fig.update_yaxes(range=list([minimumyb, maximumyb]))
@@ -240,13 +218,11 @@ with col2:
 
 
 
-
 # Section 3: Processed files and download buttons
 with col1:
-  
     if uploaded_files and metadata_list:
         excel_files = {}
-        all_data_df = pd.DataFrame()  # Combined DataFrame for all Absorbance and Wavelength data
+        all_data_df = pd.DataFrame() 
         wavelength_added = False  # Flag to check if wavelength column is already added
 
         for index, file in enumerate(uploaded_files):
@@ -262,11 +238,9 @@ with col1:
             # Create a DataFrame with "Wavenumber" and "Absorbance" as separate columns
             df = pd.DataFrame({"Wavenumber": ab_x, "Absorbance": signal})
 
-
             # Modify the output file name to ensure uniqueness if the names are the same
             new_file_name = file.name.replace('.', '_')  # Replace dot with underscore
             output_file_name = f"{new_file_name}.xlsx"
-
 
             # Write the DataFrame to an Excel file
             df.to_excel(output_file_name, index=False)
@@ -283,8 +257,6 @@ with col1:
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                     key=f"{processed_file}_{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
                 )
-
-
 
         for index, file in enumerate(uploaded_files):
             with NamedTemporaryFile(delete=False) as temp_file:
@@ -306,8 +278,6 @@ with col1:
             # Add the Absorbance data to the combined DataFrame
             all_data_df = pd.concat([all_data_df, df], axis=1)
 
-            
-
         # Create a new Excel file containing all combined data
         excelfile_combined = "OPUS_combined_data" + ".xlsx"
         all_data_df.to_excel(excelfile_combined, index=False)
@@ -321,8 +291,6 @@ with col1:
                 file_name=excelfile_combined,
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
-
-
 
         # Create an Excel file containing the metadata
         excelfile_metadata = "OPUS_metadata" + ".xlsx"
@@ -340,7 +308,6 @@ with col1:
         
         workbook_metadata.close()
         
-        
         # Offer the file for download
         with open(excelfile_metadata, 'rb') as f:
             bytes_data = BytesIO(f.read())
@@ -350,14 +317,3 @@ with col1:
                 file_name=excelfile_metadata,
                 mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             )
-
-
-
-
-# delete temp files in cache and memory
-
-directory_path = ""
-files_to_delete = temp_files_collection
-
-delete_files_with_names(directory_path, temp_files_collection)
-    
