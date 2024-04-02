@@ -21,5 +21,7 @@ st.markdown(
     - Convert them into easy to understand Excel files, using this [tool](https://hellopat.streamlit.app/OPUS_converter)
     ### Do you have funny formats as files?
     - Do you just want to convert text and other formatted files into ".xlsx" files? Click [here](https://hellopat.streamlit.app/Clean_All_Files)
+    ### Do you need to get all the Q and/or F number in a file?
+    - Then click [here](https://hellopat.streamlit.app/Find_Q_and_F_Numbers)
 """
 )
