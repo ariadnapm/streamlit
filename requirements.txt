@@ -7,5 +7,5 @@ xlsxwriter
 openpyxl
 plotly
 plotly.express
-docx
 pymupdf
+python-docx
