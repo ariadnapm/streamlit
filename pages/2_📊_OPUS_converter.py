@@ -204,10 +204,10 @@ with col2:
             background_max_ab.append(max_x)
 
 
-            min_y = np.min(signal)
+            min_y = np.min(background_signal)
             background_min_signal.append(min_y)
 
-            max_y = np.max(signal)
+            max_y = np.max(background_signal)
             background_max_signal.append(max_y)
 
         all_min_xb = np.min(background_min_ab)
