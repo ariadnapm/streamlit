@@ -6,7 +6,6 @@ import os
 import docx
 
 st.set_page_config(page_title="Drop all Q- and F- numbers", page_icon="📈", layout="wide")
-st.sidebar.header("Drop all Q- and F- numbers")
 
 st.markdown(
     """
