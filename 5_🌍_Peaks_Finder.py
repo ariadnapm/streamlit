@@ -1,4 +1,5 @@
 
+
 from brukeropusreader import read_file
 from io import BytesIO, StringIO
 from tempfile import NamedTemporaryFile
@@ -9,10 +10,9 @@ import streamlit as st
 import os
 import statistics
 
-st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="Peaks Finder", page_icon="🌍", layout="wide")
 
-st.markdown('# Chromatogram Graph Tool')
-st.sidebar.header("Chromatogram Graph Tool")
+st.markdown('# Peaks Finder')
 
 st.markdown(
     """
