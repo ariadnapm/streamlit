@@ -1,17 +1,15 @@
-from tempfile import NamedTemporaryFile
 from brukeropusreader import read_file
-import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
 from io import BytesIO, StringIO
-import statistics
+from tempfile import NamedTemporaryFile
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import streamlit as st
 import os
-
+import statistics
 
 st.set_page_config(page_title="Chromatogram Graph Tool", page_icon="🌍", layout="wide")
 
-##############################################html settings
 st.markdown('# Chromatogram Graph Tool')
 st.sidebar.header("Chromatogram Graph Tool")
 
@@ -27,22 +25,17 @@ st.markdown(
 )
 
 container = st.container()
-
 col1, col2 = container.columns([1,2])
 
 temp_files_collection = []
 
-################# Section 1: File Upload
+
+def Average(lst): 
+    return sum(lst) / len(lst) 
 
 with col1:
     uploaded_files = st.file_uploader("Upload Files", accept_multiple_files=True)
     
-def Average(lst): 
-    return sum(lst) / len(lst) 
-
-
-
-
 with col2:
     if uploaded_files:
         combined_df = pd.DataFrame()
@@ -53,7 +46,6 @@ with col2:
 
             #read file and forget first two lines - (info_lines)
             df = pd.read_table(file)
-
             filename = file.name
             
             #collect info data from the file
@@ -76,18 +68,14 @@ with col2:
             data = data.rename(columns={df.columns[0]: 'Time', df.columns[1]: 'Signal'})
                 
             tid_array = data["Time"]
-            signal_array = data["Signal"]
-            
-
-
             tid_array = pd.to_numeric(tid_array, errors='coerce')
+            signal_array = data["Signal"]
             signal_array = pd.to_numeric(signal_array, errors='coerce')
 
             min_x = np.min(tid_array)
             min_default = 5.0
             max_x = np.max(tid_array)
             max_default = 40.0
-
 
             file_df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
@@ -119,8 +107,6 @@ with col2:
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
-
-
         average_time = Average(max_signals_time)  
         average_time = pd.to_numeric(average_time, errors='coerce')
 
@@ -134,10 +120,10 @@ with col2:
             file_contents = file.getvalue().decode()
             filename = file.name
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
+            
             #collect info data from the file
             df_info = df.loc[0]        
 
-            
             #collect time and signal data from the file and add it to the combined_df
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
@@ -155,37 +141,29 @@ with col2:
             max_signals_points.append(max_signal)
             
             #using the index, find the time of the max signal p
-
             if max_signal < max_signal_of_all:
                 difference = max_signal_of_all / max_signal
                 x_signal_array = signal_array * difference
-
             else:
                 x_signal_array = signal_array
 
-
             x_shifted_df = pd.DataFrame({"Time": tid_array, "Signal": x_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
-
             combined_x_shifted_df  = pd.concat([combined_x_shifted_df , x_shifted_df],  ignore_index=True)
         
-
         #Create a line plot with legend: Y-SHIFTED
         fig_x_shifted  = px.line(combined_x_shifted_df , x="Time", y="Signal", color = option, title='Chomatogram y-shifted')
         fig_x_shifted.update_layout(showlegend=True)
         fig_x_shifted.update_xaxes(range=list([minimumx, maximumx]))
         fig_x_shifted.update_yaxes(range=list([minimumy, maximumy]))
-
         st.plotly_chart(fig_x_shifted , theme="streamlit", use_container_width=True)
     
-
         combined_xy_shifted_df = pd.DataFrame()  # Initialize an empty DataFrame to store shifted data            
-
+        
         #Create a line plot with legend: XY-SHIFTED GRAPH
-
         for file, max_signal, max_signal_time in zip(uploaded_files, max_signals_points, max_signals_time):
             file_contents = file.getvalue().decode()
-    
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
+           
             #collect info data from the file
             df_info = df.loc[0]        
             filename = file.name
@@ -196,43 +174,33 @@ with col2:
             data = data.rename(columns={df.columns[0]: 'Time', df.columns[1]: 'Signal'})
                 
             tid_array = data["Time"]
-            signal_array = data["Signal"]
-            SampleName = df_info.iloc[0]
-
-
             tid_array = pd.to_numeric(tid_array, errors='coerce')
+            signal_array = data["Signal"]
             signal_array = pd.to_numeric(signal_array, errors='coerce')
-
+            SampleName = df_info.iloc[0]
 
             #find maximum signal point
             max_signal = np.max(signal_array)
             max_signals_points.append(max_signal)
 
-
             #find index of the max signal point (time)
             index = pd.Index(signal_array).get_loc(max_signal)
             time_at_index = tid_array[index]
-            
-            #using the index, find the time of the max signal point
-            
+                        
             #shift time
             if time_at_index < average_time:
                 difference_t = average_time / time_at_index
                 xy_signal_time_array = tid_array * difference_t
-
             else:
                 difference_t = time_at_index / average_time 
                 xy_signal_time_array = tid_array / difference_t
-
 
             #normalised signals
             if max_signal < max_signal_of_all:
                 difference = max_signal_of_all / max_signal
                 xy_signal_array = signal_array * difference
-
             else:
                 xy_signal_array = signal_array
-
 
             xy_shifted_df = pd.DataFrame({"Time": xy_signal_time_array, "Signal": xy_signal_array,  df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
             combined_xy_shifted_df  = pd.concat([combined_xy_shifted_df , xy_shifted_df],  ignore_index=True)
@@ -242,14 +210,9 @@ with col2:
         fig_xy_shifted.update_layout(showlegend=True)
         fig_xy_shifted.update_xaxes(range=list([minimumx, maximumx]))
         fig_xy_shifted.update_yaxes(range=list([minimumy, maximumy]))
-
         st.plotly_chart(fig_xy_shifted , theme="streamlit", use_container_width=True)
-        
-
-
 
 with col1:
-  
     if uploaded_files:
         excel_files = {}
         all_data_df = pd.DataFrame()  # Combined DataFrame for all Absorbance and Wavelength data
@@ -258,13 +221,12 @@ with col1:
         for index, file in enumerate(uploaded_files):
             with NamedTemporaryFile(delete=False) as temp_file:
                 temp_file.write(file.getbuffer())
+            
             # Create an Excel file containing the metadata
             chroma_data = read_file(temp_file.name)
             temp_files_collection.append(temp_file.name)
-            
             file_contents = file.getvalue().decode()
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
-
 
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
@@ -275,11 +237,9 @@ with col1:
             tid_array = pd.to_numeric(tid_array, errors='coerce')
             signal_array = pd.to_numeric(signal_array, errors='coerce')
             
-
             # Modify the output file name to ensure uniqueness if the names are the same
             new_file_name = file.name.replace('.', '_')  # Replace dot with underscore
             output_file_name = f"{new_file_name}.xlsx"
-
 
             #read file and forget first two lines - (info_lines)
             filename = file.name
@@ -296,8 +256,7 @@ with col1:
             LV_BatchID =  df_info.iloc[8]
             SampleType =  df_info.iloc[9]
 
-    
-          
+            #create dataframes
             df = pd.DataFrame({"Time": tid_array, "Signal": signal_array, df.columns[0]: SampleName, df.columns[1]: LV_SampleInfo, df.columns[2]: SampleSetId, df.columns[3]: LV_Batch, df.columns[4]: SampleSetName, df.columns[5]: SampleSetStartDate, df.columns[6]: InjectionVolume, df.columns[7]: SystemName, df.columns[8]: LV_BatchID, df.columns[9]: SampleType, "File Name": filename})
             combined_df = pd.concat([combined_df, file_df], ignore_index=True)
 
@@ -305,8 +264,7 @@ with col1:
             df.to_excel(output_file_name, index=False)
             excel_files[file.name] = output_file_name
 
-        
-            # Provide a download link to the processed Excel file
+        # Provide a download link to the processed Excel file
         for input_file, processed_file in excel_files.items():
             with open(processed_file, 'rb') as f:
                 bytes_data = BytesIO(f.read())
@@ -318,17 +276,13 @@ with col1:
                     key=f"{processed_file}"
                 )
 
-
-
         for index, file in enumerate(uploaded_files):
             with NamedTemporaryFile(delete=False) as temp_file:
                 temp_file.write(file.getbuffer())
             opus_data = read_file(temp_file.name)
             temp_files_collection.append(temp_file.name)
-
             file_contents = file.getvalue().decode()
             df = pd.read_csv(StringIO(file_contents), delimiter='\t')
-
 
             data = df.loc[1:]
             data = data.iloc[:, 0:2]
@@ -338,8 +292,6 @@ with col1:
             signal_array = data["Signal"]
             tid_array = pd.to_numeric(tid_array, errors='coerce')
             signal_array = pd.to_numeric(signal_array, errors='coerce')
-            
-
             
             if not time_added:
                 time_added = tid_array  # Replace with the actual wavelength data from the OPUS file
@@ -351,8 +303,6 @@ with col1:
 
             # Add the Absorbance data to the combined DataFrame
             all_data_df = pd.concat(["Time": tid_array, df], axis=1)
-
-            
 
         # Create a new Excel file containing all combined data
         excelfile_combined = "Chromatogram_combined_data" + ".xlsx"
