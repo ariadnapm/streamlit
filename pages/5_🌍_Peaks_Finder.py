@@ -100,6 +100,10 @@ with col2:
             max_signals_time.append(max_signal_time)
         
         with col1:
+            minimumx = st.slider("Select minimum value for the x-axis of the plots", np.min(time_array), np.max(signal_array), 0.0)
+            maximumx = st.slider("Select maximum value for the x-axis of the plots", np.min(signal_array), np.max(signal_array), np.max(signal_array))
+            minimumy = st.slider("Select minimum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.0)
+            maximumy = st.slider("Select maximum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.1)
             range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.35,2.45))
             range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.45,2.65))
             range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.65,2.75))
@@ -113,6 +117,7 @@ with col2:
         fig.add_vrect(x0=range1[0], x1=range1[1], fillcolor="green", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range2[0], x1=range2[1], fillcolor="red", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range3[0], x1=range3[1], fillcolor="blue", opacity=0.3, layer="below", line_width=0)
+        fig.update_xaxes(range=list([minimumx, maximumx]))
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
