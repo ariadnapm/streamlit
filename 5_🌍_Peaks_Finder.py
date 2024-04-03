@@ -207,3 +207,38 @@ with col2:
                     file_name=excelfilepeaks,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
+
+        if st.button("Get Peaks% Data"):
+                    rangespeakper = [peak1, peak2, peak3]
+                    rangepeakper_data = []  # Define range_data as an empty list
+                    for file in uploaded_files:
+                        for i, r in enumerate(rangespeakper, start=1):
+                            filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
+                            max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
+                            staticfiltered_df = combined_df[(combined_df['Time'] >= 10.0) & (combined_df['Time'] <= 15.0)]
+                            staticmax_point = staticfiltered_df.loc[staticfiltered_df['Signal'].idxmax()]
+
+                            rangepeakper_info = {
+                                'File Name': file.name,
+                                'Peak': f'Peak {i}',
+                                'Time of Max Point': max_point['Time'],
+                                'Max Point%': max_point['Signal']/staticmax_point['Signal']*100
+                            }
+                            rangepeakper_data.append(rangepeakper_info)
+
+                    # Create a dataframe with the range details
+                    rangepeakper_df = pd.DataFrame(rangepeakper_data)
+                    st.write(rangepeakper_df)
+
+                    excelfilepeaksper = "Chomatogram_peaks%_ranges_data" + ".xlsx"
+                    rangepeakper_df.to_excel(excelfilepeaksper, index=False)
+                    
+                    # Offer the peaks data file for download
+                    with open(excelfilepeaksper, 'rb') as f:
+                        bytes_data = BytesIO(f.read())
+                        st.download_button(
+                            label="Download Excel Peaks% Data File",
+                            data=bytes_data,
+                            file_name=excelfilepeaksper,
+                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                        )
