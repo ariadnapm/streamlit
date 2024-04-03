@@ -118,17 +118,17 @@ with col2:
 
 
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1')
-        fig.update_xaxes(2.35, 2.45)
+        fig.update_xaxes(minallowed=2.35, maxallowed=2.45)
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2')
-        fig.update_xaxes(2.45, 2.65)
+        fig.update_xaxes(minallowed=2.45, maxallowed=2.65)
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 3')
-        fig.update_xaxes(2.65, 2.75)
+        fig.update_xaxes(minallowed=2.65, maxallowed=2.75)
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
@@ -138,14 +138,10 @@ with col2:
             for file in uploaded_files:
                 for i, r in enumerate(ranges, start=1):
                     filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
-                    min_value = filtered_df['Signal'].min()
-                    max_value = filtered_df['Signal'].max()
                     max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
                     range_info = {
                         'File Name': file.name,
                         'Range': f'Range {i}',
-                        'Min Value': min_value,
-                        'Max Value': max_value,
                         'Time of Max Point': max_point['Time'],
                         'Max Point': max_point['Signal']
                     }
@@ -165,8 +161,6 @@ with col2:
             for file in uploaded_files:
                 for i, r in enumerate(rangespeak, start=1):
                     filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
-                    min_value = filtered_df['Signal'].min()
-                    max_value = filtered_df['Signal'].max()
                     max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
                     rangepeak_info = {
                         'File Name': file.name,
