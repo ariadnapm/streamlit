@@ -107,7 +107,7 @@ with col2:
             option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9],  "File Name"))
     
 
-        #Create a line plot with legend: RAW DATA
+        #Create a line plot RAW DATA
         fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
         fig.add_vrect(x0=range1[0], x1=range1[1], fillcolor="green", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range2[0], x1=range2[1], fillcolor="red", opacity=0.3, layer="below", line_width=0)
@@ -115,6 +115,22 @@ with col2:
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
+
+
+        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1')
+        fig.update_xaxes(2.35, 2.45)
+        fig.update_layout(showlegend=True)
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2')
+        fig.update_xaxes(2.45, 2.65)
+        fig.update_layout(showlegend=True)
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
+
+        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 3')
+        fig.update_xaxes(2.65, 2.75)
+        fig.update_layout(showlegend=True)
+        st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
         if st.button("Get Data"):
             ranges = [range1, range2, range3]
@@ -139,18 +155,54 @@ with col2:
             range_df = pd.DataFrame(range_data)
             st.write(range_df)
 
+        peak1 = [2.35, 2.45]
+        peak2 = [2.45, 2.65]
+        peak3 = [2.65, 2.75]
+        
+        if st.button("Get Data"):
+            rangespeak = [peak1, peak2, peak3]
+            rangepeak_data = []  # Define range_data as an empty list
+            for file in uploaded_files:
+                for i, r in enumerate(rangespeak, start=1):
+                    filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
+                    min_value = filtered_df['Signal'].min()
+                    max_value = filtered_df['Signal'].max()
+                    max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
+                    rangepeak_info = {
+                        'File Name': file.name,
+                        'Peak': f'Peak {i}',
+                        'Time of Max Point': max_point['Time'],
+                        'Max Point': max_point['Signal']
+                    }
+                    rangepeak_data.append(range_info)
 
+            # Create a dataframe with the range details
+            rangepeak_df = pd.DataFrame(rangepeak_data)
+            st.write(rangepeak_df)
 
-                        # Create a new Excel file containing all combined data
-            excelfile = "OPUS_combined_data" + ".xlsx"
+            
+            # Create a new Excel file containing all combined data
+            excelfile = "Chomatogram_selected_ranges_data" + ".xlsx"
             range_df.to_excel(excelfile, index=False)
 
-            # Offer the combined data file for download
+            excelfilepeaks = "Chomatogram_peaks_ranges_data" + ".xlsx"
+            rangepeak_df.to_excel(excelfilepeaks, index=False)
+            
+            # Offer the ranges data file for download
             with open(excelfile, 'rb') as f:
                 bytes_data = BytesIO(f.read())
                 st.download_button(
-                    label="Download Excel Data File",
+                    label="Download Excel Ranges Data File",
                     data=bytes_data,
                     file_name=excelfile,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+            # Offer the peaks data file for download
+            with open(excelfilepeaks, 'rb') as f:
+                bytes_data = BytesIO(f.read())
+                st.download_button(
+                    label="Download Excel Peaks Data File",
+                    data=bytes_data,
+                    file_name=excelfilepeaks,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
