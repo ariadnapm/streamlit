@@ -135,7 +135,7 @@ with col2:
         fig3.update_layout(showlegend=True)
         st.plotly_chart(fig3, theme="streamlit", use_container_width=True)
 
-        if st.button("Get Data"):
+        if st.button("Get Ranges Data"):
             ranges = [range1, range2, range3]
             range_data = []  # Define range_data as an empty list
             for file in uploaded_files:
@@ -158,7 +158,7 @@ with col2:
         peak2 = [2.45, 2.65]
         peak3 = [2.65, 2.75]
         
-        if st.button("Get Data"):
+        if st.button("Get Peaks Data"):
             rangespeak = [peak1, peak2, peak3]
             rangepeak_data = []  # Define range_data as an empty list
             for file in uploaded_files:
