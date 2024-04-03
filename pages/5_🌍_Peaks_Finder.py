@@ -100,8 +100,8 @@ with col2:
             max_signals_time.append(max_signal_time)
         
         with col1:
-            minimumx = st.slider("Select minimum value for the x-axis of the plots", np.min(time_array), np.max(time_array), 0.0)
-            maximumx = st.slider("Select maximum value for the x-axis of the plots", np.min(time_array), np.max(time_array), np.max(time_array))
+            minimumx = st.slider("Select minimum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=min(min_time))
+            maximumx = st.slider("Select maximum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=max(max_time))
             minimumy = st.slider("Select minimum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.0)
             maximumy = st.slider("Select maximum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.1)
             range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.35,2.45))
