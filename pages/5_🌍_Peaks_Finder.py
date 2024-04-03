@@ -171,7 +171,7 @@ with col2:
                         'Time of Max Point': max_point['Time'],
                         'Max Point': max_point['Signal']
                     }
-                    rangepeak_data.append(range_info)
+                    rangepeak_data.append(rangepeak_info)
 
             # Create a dataframe with the range details
             rangepeak_df = pd.DataFrame(rangepeak_data)
