@@ -1,5 +1,4 @@
 
-
 from brukeropusreader import read_file
 from io import BytesIO, StringIO
 from tempfile import NamedTemporaryFile
@@ -101,36 +100,55 @@ with col2:
             max_signals_time.append(max_signal_time)
         
         with col1:
-            range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(0.0,10.0))
-            range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(10.0,20.0))
-            range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(20.0,25.0))
-
+            minimumx = st.slider("Select minimum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=min(min_time))
+            maximumx = st.slider("Select maximum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=max(max_time))
+            range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.35,2.45))
+            range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.45,2.65))
+            range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.65,2.75))
+            minimumy = st.slider("Select minimum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.0)
+            maximumy = st.slider("Select maximum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.1)
             option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9],  "File Name"))
     
 
-        #Create a line plot with legend: RAW DATA
-        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
+        #Create a line plot RAW DATA
+        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram with selected ranges')
         fig.add_vrect(x0=range1[0], x1=range1[1], fillcolor="green", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range2[0], x1=range2[1], fillcolor="red", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range3[0], x1=range3[1], fillcolor="blue", opacity=0.3, layer="below", line_width=0)
+        fig.update_xaxes(range=list([minimumx, maximumx]))
         fig.update_layout(showlegend=True)
         st.plotly_chart(fig, theme="streamlit", use_container_width=True)
 
 
-        if st.button("Get Data"):
+
+        fig1 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1 (2.35 to 2.45 sec)')
+        fig1.update_xaxes(minallowed=2.35, maxallowed=2.45)
+        fig1.update_yaxes(range=list([minimumy, maximumy]))
+        fig1.update_layout(showlegend=True)
+        st.plotly_chart(fig1, theme="streamlit", use_container_width=True)
+
+        fig2 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2 (2.35 to 2.45 sec)')
+        fig2.update_xaxes(minallowed=2.45, maxallowed=2.65)
+        fig2.update_yaxes(range=list([minimumy, maximumy]))
+        fig2.update_layout(showlegend=True)
+        st.plotly_chart(fig2, theme="streamlit", use_container_width=True)
+
+        fig3 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 3')
+        fig3.update_xaxes(minallowed=2.65, maxallowed=2.75)
+        fig3.update_yaxes(range=list([minimumy, maximumy]))
+        fig3.update_layout(showlegend=True)
+        st.plotly_chart(fig3, theme="streamlit", use_container_width=True)
+
+        if st.button("Get Ranges Data"):
             ranges = [range1, range2, range3]
             range_data = []  # Define range_data as an empty list
             for file in uploaded_files:
                 for i, r in enumerate(ranges, start=1):
                     filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
-                    min_value = filtered_df['Signal'].min()
-                    max_value = filtered_df['Signal'].max()
                     max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
                     range_info = {
                         'File Name': file.name,
                         'Range': f'Range {i}',
-                        'Min Value': min_value,
-                        'Max Value': max_value,
                         'Time of Max Point': max_point['Time'],
                         'Max Point': max_point['Signal']
                     }
@@ -139,19 +157,53 @@ with col2:
             # Create a dataframe with the range details
             range_df = pd.DataFrame(range_data)
             st.write(range_df)
-
-
-
-                        # Create a new Excel file containing all combined data
-            excelfile = "OPUS_combined_data" + ".xlsx"
+                    
+            # Create a new Excel file containing all combined data
+            excelfile = "Chomatogram_selected_ranges_data" + ".xlsx"
             range_df.to_excel(excelfile, index=False)
 
-            # Offer the combined data file for download
+            # Offer the ranges data file for download
             with open(excelfile, 'rb') as f:
                 bytes_data = BytesIO(f.read())
                 st.download_button(
-                    label="Download Excel Data File",
+                    label="Download Excel Ranges Data File",
                     data=bytes_data,
                     file_name=excelfile,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+                
+        peak1 = [2.35, 2.45]
+        peak2 = [2.45, 2.65]
+        peak3 = [2.65, 2.75]
+        
+        if st.button("Get Peaks Data"):
+            rangespeak = [peak1, peak2, peak3]
+            rangepeak_data = []  # Define range_data as an empty list
+            for file in uploaded_files:
+                for i, r in enumerate(rangespeak, start=1):
+                    filtered_df = combined_df[(combined_df['Time'] >= r[0]) & (combined_df['Time'] <= r[1])]
+                    max_point = filtered_df.loc[filtered_df['Signal'].idxmax()]
+                    rangepeak_info = {
+                        'File Name': file.name,
+                        'Peak': f'Peak {i}',
+                        'Time of Max Point': max_point['Time'],
+                        'Max Point': max_point['Signal']
+                    }
+                    rangepeak_data.append(rangepeak_info)
+
+            # Create a dataframe with the range details
+            rangepeak_df = pd.DataFrame(rangepeak_data)
+            st.write(rangepeak_df)
+
+            excelfilepeaks = "Chomatogram_peaks_ranges_data" + ".xlsx"
+            rangepeak_df.to_excel(excelfilepeaks, index=False)
+            
+            # Offer the peaks data file for download
+            with open(excelfilepeaks, 'rb') as f:
+                bytes_data = BytesIO(f.read())
+                st.download_button(
+                    label="Download Excel Peaks Data File",
+                    data=bytes_data,
+                    file_name=excelfilepeaks,
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
