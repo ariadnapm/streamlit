@@ -153,7 +153,21 @@ with col2:
             # Create a dataframe with the range details
             range_df = pd.DataFrame(range_data)
             st.write(range_df)
+                    
+            # Create a new Excel file containing all combined data
+            excelfile = "Chomatogram_selected_ranges_data" + ".xlsx"
+            range_df.to_excel(excelfile, index=False)
 
+            # Offer the ranges data file for download
+            with open(excelfile, 'rb') as f:
+                bytes_data = BytesIO(f.read())
+                st.download_button(
+                    label="Download Excel Ranges Data File",
+                    data=bytes_data,
+                    file_name=excelfile,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                )
+                
         peak1 = [2.35, 2.45]
         peak2 = [2.45, 2.65]
         peak3 = [2.65, 2.75]
@@ -177,23 +191,9 @@ with col2:
             rangepeak_df = pd.DataFrame(rangepeak_data)
             st.write(rangepeak_df)
 
-            
-            # Create a new Excel file containing all combined data
-            excelfile = "Chomatogram_selected_ranges_data" + ".xlsx"
-            range_df.to_excel(excelfile, index=False)
-
             excelfilepeaks = "Chomatogram_peaks_ranges_data" + ".xlsx"
             rangepeak_df.to_excel(excelfilepeaks, index=False)
             
-            # Offer the ranges data file for download
-            with open(excelfile, 'rb') as f:
-                bytes_data = BytesIO(f.read())
-                st.download_button(
-                    label="Download Excel Ranges Data File",
-                    data=bytes_data,
-                    file_name=excelfile,
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                )
             # Offer the peaks data file for download
             with open(excelfilepeaks, 'rb') as f:
                 bytes_data = BytesIO(f.read())
