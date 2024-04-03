@@ -119,16 +119,19 @@ with col2:
 
         fig1 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1')
         fig1.update_xaxes(minallowed=2.35, maxallowed=2.45)
+        fig1.update_yaxes(minallowed=0.00, maxallowed=0.10)
         fig1.update_layout(showlegend=True)
         st.plotly_chart(fig1, theme="streamlit", use_container_width=True)
 
         fig2 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2')
         fig2.update_xaxes(minallowed=2.45, maxallowed=2.65)
+        fig2.update_yaxes(minallowed=0.00, maxallowed=0.10)
         fig2.update_layout(showlegend=True)
         st.plotly_chart(fig2, theme="streamlit", use_container_width=True)
 
         fig3 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 3')
         fig3.update_xaxes(minallowed=2.65, maxallowed=2.75)
+        fig3.update_yaxes(minallowed=0.00, maxallowed=0.10)
         fig3.update_layout(showlegend=True)
         st.plotly_chart(fig3, theme="streamlit", use_container_width=True)
 
