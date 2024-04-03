@@ -100,15 +100,16 @@ with col2:
             max_signals_time.append(max_signal_time)
         
         with col1:
-            range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(0.0,10.0))
-            range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(10.0,20.0))
-            range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(20.0,25.0))
-
+            range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.35,2.45))
+            range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.45,2.65))
+            range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.65,2.75))
+            minimumy = st.slider("Select minimum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.0)
+            maximumy = st.slider("Select maximum value for the y-axis of the plots", np.min(signal_array), np.max(signal_array), 0.1)
             option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9],  "File Name"))
     
 
         #Create a line plot RAW DATA
-        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram')
+        fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram with selected ranges')
         fig.add_vrect(x0=range1[0], x1=range1[1], fillcolor="green", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range2[0], x1=range2[1], fillcolor="red", opacity=0.3, layer="below", line_width=0)
         fig.add_vrect(x0=range3[0], x1=range3[1], fillcolor="blue", opacity=0.3, layer="below", line_width=0)
@@ -117,21 +118,21 @@ with col2:
 
 
 
-        fig1 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1')
+        fig1 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 1 (2.35 to 2.45 sec)')
         fig1.update_xaxes(minallowed=2.35, maxallowed=2.45)
-        fig1.update_yaxes(minallowed=0.00, maxallowed=0.10)
+        fig1.update_yaxes(range=list([minimumy, maximumy]))
         fig1.update_layout(showlegend=True)
         st.plotly_chart(fig1, theme="streamlit", use_container_width=True)
 
-        fig2 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2')
+        fig2 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 2 (2.35 to 2.45 sec)')
         fig2.update_xaxes(minallowed=2.45, maxallowed=2.65)
-        fig2.update_yaxes(minallowed=0.00, maxallowed=0.10)
+        fig2.update_yaxes(range=list([minimumy, maximumy]))
         fig2.update_layout(showlegend=True)
         st.plotly_chart(fig2, theme="streamlit", use_container_width=True)
 
         fig3 = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram Peak 3')
         fig3.update_xaxes(minallowed=2.65, maxallowed=2.75)
-        fig3.update_yaxes(minallowed=0.00, maxallowed=0.10)
+        fig3.update_yaxes(range=list([minimumy, maximumy]))
         fig3.update_layout(showlegend=True)
         st.plotly_chart(fig3, theme="streamlit", use_container_width=True)
 
