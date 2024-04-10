@@ -9,7 +9,7 @@ import streamlit as st
 import os
 import statistics
 
-st.set_page_config(page_title="Peaks Finder", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="Peaks Finder", page_icon="🔺", layout="wide")
 
 st.markdown('# Peaks Finder')
 
