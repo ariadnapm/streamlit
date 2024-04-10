@@ -8,7 +8,7 @@ import streamlit as st
 import os
 import statistics
 
-st.set_page_config(page_title="Area Finder", page_icon="🌍", layout="wide")
+st.set_page_config(page_title="Area Finder", page_icon="📐", layout="wide")
 
 st.markdown('# Area Finder')
 
