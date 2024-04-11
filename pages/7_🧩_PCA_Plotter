@@ -6,7 +6,7 @@ import streamlit as st
 from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import plotly.graph_objects as go
-st.set_page_config(page_title="PCA show", page_icon="✨", layout="wide")
+st.set_page_config(page_title="PCA show", page_icon="🧩", layout="wide")
 
 st.markdown('# PCA show')
 
