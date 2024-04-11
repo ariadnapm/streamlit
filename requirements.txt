@@ -9,3 +9,7 @@ plotly
 plotly.express
 pymupdf
 python-docx
+numpy 
+sklearn.preprocessing
+sklearn.decomposition
+plotly.graph_objects
