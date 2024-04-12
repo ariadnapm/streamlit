@@ -251,13 +251,16 @@ with st.container():
                 st.plotly_chart(scatter_fig, use_container_width=True)
         
         
-        minimumx = st.slider("Select minimum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=min(min_time), key= "minx")
-        maximumx = st.slider("Select maximum value for the x-axis of the plots",  min_value=min(min_time), max_value=max(max_time), value=max(max_time), key= "maxx")
-        range1 = st.slider("Select a first range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.35,2.45), key= "r1")
-        range2 = st.slider("Select a second range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.45,2.65), key= "r2")
-        range3 = st.slider("Select a third range to look at", min_value=min(min_time), max_value=max(max_time), value=(2.65,2.75), key= "r3")
-        minimumy = st.slider("Select minimum value for the y-axis of the plots", min_value=np.min(signal_array), max_value=np.max(signal_array), value=0.0, key= "miny")
-        maximumy = st.slider("Select maximum value for the y-axis of the plots", min_value=np.min(signal_array), max_value=np.max(signal_array), value=0.1, key= "maxy")
+        minimumx = st.number_input("Minimum value for the x-axis", value=min(min_time))
+        maximumx = st.number_input("Maximum value for the x-axis", value = max(max_time))
+        range11 = st.number_input("Minimum value for the range 1", value=(2.35))
+        range12 = st.number_input("Maximum value for the range 1", value=(2.45))
+        range21 = st.number_input("Minimum value for the range 2", value=(2.45))
+        range21 = st.number_input("Minimum value for the range 2", value=(2.65))
+        range31 = st.number_input("Maximum value for the range 2", value=(2.65))
+        range32 = st.number_input("Maximum value for the range 2", value=(2.75))
+        minimumy =  st.number_input("Minimum value for the y-axis", value=0.0)
+        maximumy = st.number_input("Maximum  value for the y-axis", value=0.1)
         option = st.selectbox('Legend view', (df.columns[0], df.columns[1], df.columns[2], df.columns[3], df.columns[4], df.columns[5], df.columns[6], df.columns[7], df.columns[8], df.columns[9],  "File Name"))
         
 
