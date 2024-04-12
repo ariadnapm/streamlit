@@ -10,5 +10,5 @@ plotly.express
 pymupdf
 python-docx
 numpy 
-sklearn
+scikit-learn
 plotly.graph_objects
