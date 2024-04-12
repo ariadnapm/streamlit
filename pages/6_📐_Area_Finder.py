@@ -267,9 +267,9 @@ with st.container():
 
         with tab1:
                 fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram with selected ranges')
-                fig.add_vrect(x0=range1[0], x1=range1[1], fillcolor="green", opacity=0.3, layer="below", line_width=0)
-                fig.add_vrect(x0=range2[0], x1=range2[1], fillcolor="red", opacity=0.3, layer="below", line_width=0)
-                fig.add_vrect(x0=range3[0], x1=range3[1], fillcolor="blue", opacity=0.3, layer="below", line_width=0)
+                fig.add_vrect(x0=range11, x1=range12, fillcolor="green", opacity=0.3, layer="below", line_width=0)
+                fig.add_vrect(x0=range21, x1=range22, fillcolor="red", opacity=0.3, layer="below", line_width=0)
+                fig.add_vrect(x0=range31, x1=range32, fillcolor="blue", opacity=0.3, layer="below", line_width=0)
                 fig.add_vrect(x0=10.0, x1=15.0, fillcolor="yellow", opacity=0.3, layer="below", line_width=0)
                 fig.update_xaxes(range=list([minimumx, maximumx]))
                 fig.update_layout(showlegend=True)
