@@ -1,3 +1,4 @@
+python <= 3.4
 streamlit
 datetime
 brukeropusreader
