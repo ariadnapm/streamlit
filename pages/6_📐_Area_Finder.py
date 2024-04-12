@@ -255,9 +255,9 @@ with st.container():
         maximumx = st.number_input("Maximum value for the x-axis", value = max(max_time))
         range11 = st.number_input("Minimum value for the range 1", value=2.35)
         range12 = st.number_input("Maximum value for the range 1", value=2.45)
-        range21 = st.number_input("Minimum value for the range 2", value=2.45)
+        range21 = range12
         range22 = st.number_input("Minimum value for the range 2", value=2.65)
-        range31 = st.number_input("Maximum value for the range 2", value=2.65)
+        range31 = range22
         range32 = st.number_input("Maximum value for the range 2", value=2.75)
         minimumy =  st.number_input("Minimum value for the y-axis", value=0.0)
         maximumy = st.number_input("Maximum  value for the y-axis", value=0.1)
