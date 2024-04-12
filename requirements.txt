@@ -1,4 +1,4 @@
-python <= 3.4
+python
 streamlit
 datetime
 brukeropusreader
@@ -11,6 +11,6 @@ plotly.express
 pymupdf
 python-docx
 numpy 
-sklearn.preprocessing
+sklearn.preprocessing = 1.4.2
 sklearn.decomposition
 plotly.graph_objects
