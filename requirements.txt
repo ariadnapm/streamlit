@@ -11,4 +11,3 @@ pymupdf
 python-docx
 numpy 
 scikit-learn
-plotly.graph_objects
