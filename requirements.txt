@@ -10,6 +10,5 @@ plotly.express
 pymupdf
 python-docx
 numpy 
-sklearn.preprocessing == 1.1
-sklearn.decomposition
+sklearn
 plotly.graph_objects
