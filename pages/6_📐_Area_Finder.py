@@ -255,9 +255,9 @@ with st.container():
         maximumx = st.number_input("Maximum value for the x-axis", value = max(max_time))
         range11 = st.number_input("Minimum value for the range 1", value=2.35)
         range12 = st.number_input("Maximum value for the range 1", value=2.45)
-        range21 = range12
-        range22 = st.number_input("Minimum value for the range 2", value=2.65)
-        range31 = range22
+        range21 = st.caption("Minimum value for range 2 (same as the maximum value for the range 1)")
+        range22 = st.number_input("Maximum value for the range 2", value=2.65)
+        range31 = st.caption("Minimum value for range 3 (same as the maximum value for the range 2)")
         range32 = st.number_input("Maximum value for the range 2", value=2.75)
         minimumy =  st.number_input("Minimum value for the y-axis", value=0.0)
         maximumy = st.number_input("Maximum  value for the y-axis", value=0.1)
@@ -268,8 +268,8 @@ with st.container():
         with tab1:
                 fig = px.line(combined_df, x="Time", y="Signal", color = option, title='Chomatogram with selected ranges')
                 fig.add_vrect(x0=range11, x1=range12, fillcolor="green", opacity=0.3, layer="below", line_width=0)
-                fig.add_vrect(x0=range21, x1=range22, fillcolor="red", opacity=0.3, layer="below", line_width=0)
-                fig.add_vrect(x0=range31, x1=range32, fillcolor="blue", opacity=0.3, layer="below", line_width=0)
+                fig.add_vrect(x0=range12, x1=range22, fillcolor="red", opacity=0.3, layer="below", line_width=0)
+                fig.add_vrect(x0=range22, x1=range32, fillcolor="blue", opacity=0.3, layer="below", line_width=0)
                 fig.add_vrect(x0=10.0, x1=15.0, fillcolor="yellow", opacity=0.3, layer="below", line_width=0)
                 fig.update_xaxes(range=list([minimumx, maximumx]))
                 fig.update_layout(showlegend=True)
